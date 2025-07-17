@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 8px;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Customer Form Submissions</h2>
+  <table id="formsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Message</th>
+        <th>Date Submitted</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('/admin-data')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector('#formsTable tbody');
+        data.forEach(form => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${form.id}</td>
+            <td>${form.name}</td>
+            <td>${form.email}</td>
+            <td>${form.message}</td>
+            <td>${form.date_submitted}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(err => console.error('Error loading data:', err));
+  </script>
+</body>
+</html>
