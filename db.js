@@ -7,19 +7,22 @@ db.serialize(() => {
     CREATE TABLE IF NOT EXISTS customer_forms (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
-      email TEXT,
-      message TEXT,
+      amount TEXT,
+      reason TEXT,
+      repayment_date TEXT,
+      contact TEXT,
+      bsp_account TEXT,
       date_submitted TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
   `);
 });
 
 module.exports = {
-  insertForm: (name, email, message) => {
+  insertForm: (name, amount, reason, repaymentDate, contact, bspAccount) => {
     return new Promise((resolve, reject) => {
       db.run(
-        `INSERT INTO customer_forms (name, email, message) VALUES (?, ?, ?)`,
-        [name, email, message],
+        `INSERT INTO customer_forms (name, amount, reason, repayment_date, contact, bsp_account) VALUES (?, ?, ?, ?, ?, ?)`,
+        [name, amount, reason, repaymentDate, contact, bspAccount],
         function (err) {
           if (err) reject(err);
           else resolve();
@@ -37,4 +40,3 @@ module.exports = {
     });
   }
 };
-

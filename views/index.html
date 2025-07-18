@@ -6,7 +6,7 @@
   <style>
     table {
       border-collapse: collapse;
-      width: 80%;
+      width: 90%;
       margin: 20px auto;
     }
     th, td {
@@ -19,16 +19,18 @@
   </style>
 </head>
 <body>
-  <h2 style="text-align:center;">Customer Form Submissions</h2>
+  <h2 style="text-align:center;">Loan Applications</h2>
   <table id="formsTable">
     <thead>
       <tr>
+        <th>ID</th>
         <th>Name</th>
-        <th>Amount To be Borrowed</th>
+        <th>Amount</th>
         <th>Reason</th>
         <th>Repayment Date</th>
         <th>Phone or Email</th>
-        <th>BSP Account Number</th>
+        <th>BSP Account</th>
+        <th>Date Submitted</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -44,8 +46,11 @@
           tr.innerHTML = `
             <td>${form.id}</td>
             <td>${form.name}</td>
-            <td>${form.email}</td>
-            <td>${form.message}</td>
+            <td>${form.amount}</td>
+            <td>${form.reason}</td>
+            <td>${form.repayment_date}</td>
+            <td>${form.contact}</td>
+            <td>${form.bsp_account}</td>
             <td>${form.date_submitted}</td>
           `;
           tbody.appendChild(tr);

@@ -4,22 +4,21 @@ const db = require('./db');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;  // use dynamic port for Render
+const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('views'));
 
-// Endpoint to receive form submissions
+// Handle form submission
 app.post('/api/submit-form', (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, amount, reason, repaymentDate, contact, bspAccount } = req.body;
 
-  if (!name || !email || !message) {
+  if (!name || !amount || !reason || !repaymentDate || !contact || !bspAccount) {
     return res.status(400).send('All fields are required.');
   }
 
-  db.insertForm(name, email, message)
+  db.insertForm(name, amount, reason, repaymentDate, contact, bspAccount)
     .then(() => res.send('Form submitted successfully!'))
     .catch(err => {
       console.error(err);
@@ -27,7 +26,7 @@ app.post('/api/submit-form', (req, res) => {
     });
 });
 
-// Endpoint to get all submissions for admin
+// Admin data view
 app.get('/admin-data', (req, res) => {
   db.getAllForms()
     .then(forms => res.json(forms))
@@ -37,14 +36,11 @@ app.get('/admin-data', (req, res) => {
     });
 });
 
-// Serve the admin page
+// Admin page
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'admin.html'));
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
-
-
