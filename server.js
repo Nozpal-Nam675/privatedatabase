@@ -9,18 +9,15 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// ✅ Correct MongoDB URI
+// MongoDB Connection URI
 const mongoURI = "mongodb+srv://nozpalnam:m72b0vKsbV4BunxF@cluster0.zhabmcp.mongodb.net/financeDB?retryWrites=true&w=majority&appName=Cluster0";
 
-// ✅ Connect to MongoDB
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("✅ Connected to MongoDB"))
-.catch(err => console.error("❌ MongoDB connection error:", err));
+// Connect to MongoDB (no deprecated options)
+mongoose.connect(mongoURI)
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// Schema and Model
+// Define Mongoose schema and model
 const loanRequestSchema = new mongoose.Schema({
   id: String,
   name: String,
@@ -34,19 +31,19 @@ const loanRequestSchema = new mongoose.Schema({
 
 const LoanRequest = mongoose.model("LoanRequest", loanRequestSchema);
 
-// ✅ POST endpoint
+// POST endpoint to receive loan request data
 app.post("/submit", async (req, res) => {
   try {
     const loanData = new LoanRequest(req.body);
     await loanData.save();
-    res.json({ message: "✅ Data stored successfully!" });
+    res.json({ message: "Data stored successfully!" });
   } catch (err) {
     console.error("❌ Error saving data:", err);
-    res.status(500).json({ message: "❌ Server error, data not saved." });
+    res.status(500).json({ message: "Server error, data not saved." });
   }
 });
 
-// ✅ Start server
+// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
