@@ -1,19 +1,17 @@
 {
   "name": "private-admin-site",
   "version": "1.0.0",
+  "description": "Private admin site backend",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "keywords": [],
   "author": "Lapson Timmy",
   "license": "ISC",
-  "description": "Private admin site backend",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "mongoose": "^8.16.4",
-    "sqlite3": "^5.1.7"
+    "mongoose": "^8.16.4"
   }
 }
