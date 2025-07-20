@@ -51,7 +51,7 @@
             <td>${form.repaymentDate}</td>
             <td>${form.contact}</td>
             <td>${form.bspAccount}</td>
-            <td>${form.dateSubmitted}</td>
+            <td>${new Date(form.dateSubmitted).toLocaleDateString()}</td>
           `;
           tbody.appendChild(tr);
         });
