@@ -8,13 +8,14 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(__dirname));
 
-mongoose.connect(process.env.MONGO_URI, {
+// ✅ Your MongoDB URI inserted directly
+mongoose.connect("mongodb+srv://nozpalnam:<db_password>@cluster0.zhabmcp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
 const formSchema = new mongoose.Schema({
-  id: Number, // Now auto-assigned
+  id: Number, // Auto-generated position
   name: String,
   amount: String,
   reason: String,
@@ -26,25 +27,31 @@ const formSchema = new mongoose.Schema({
 
 const Form = mongoose.model("Form", formSchema);
 
+// ✅ Auto-assign ID based on total count
 app.post("/submit", async (req, res) => {
   try {
     const count = await Form.countDocuments();
     const newEntry = new Form({ ...req.body, id: count + 1 });
     await newEntry.save();
-    res.status(200).json({ message: "Data saved" });
+    res.status(200).json({ message: "Form submitted and saved" });
   } catch (err) {
-    res.status(500).json({ error: "Failed to save data" });
+    console.error("Submission error:", err);
+    res.status(500).json({ error: "Failed to save form data" });
   }
 });
 
+// ✅ Serve dashboard data for index.html
 app.get("/admin-data", async (req, res) => {
   try {
     const entries = await Form.find();
     res.json(entries);
   } catch (err) {
-    res.status(500).json({ error: "Failed to fetch data" });
+    console.error("Fetch error:", err);
+    res.status(500).json({ error: "Failed to retrieve form data" });
   }
 });
 
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
