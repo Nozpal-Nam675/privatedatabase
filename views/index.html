@@ -5,21 +5,21 @@
   <title>Admin Dashboard</title>
   <style>
     table {
-      border-collapse: collapse;
-      width: 90%;
+      width: 95%;
       margin: 20px auto;
+      border-collapse: collapse;
     }
     th, td {
-      border: 1px solid #333;
       padding: 8px;
+      border: 1px solid #333;
     }
     th {
-      background-color: #f4f4f4;
+      background-color: #ddd;
     }
   </style>
 </head>
 <body>
-  <h2 style="text-align:center;">Loan Applications</h2>
+  <h2 style="text-align:center;">Loan Applications Dashboard</h2>
   <table id="formsTable">
     <thead>
       <tr>
@@ -28,8 +28,8 @@
         <th>Amount</th>
         <th>Reason</th>
         <th>Repayment Date</th>
-        <th>Phone or Email</th>
-        <th>BSP Account Number</th>
+        <th>Contact</th>
+        <th>BSP Account</th>
         <th>Date Submitted</th>
       </tr>
     </thead>
@@ -37,12 +37,12 @@
   </table>
 
   <script>
-    fetch('/admin-data')
+    fetch("/admin-data")
       .then(res => res.json())
       .then(data => {
-        const tbody = document.querySelector('#formsTable tbody');
+        const tbody = document.querySelector("#formsTable tbody");
         data.forEach(form => {
-          const tr = document.createElement('tr');
+          const tr = document.createElement("tr");
           tr.innerHTML = `
             <td>${form.id}</td>
             <td>${form.name}</td>
@@ -56,7 +56,7 @@
           tbody.appendChild(tr);
         });
       })
-      .catch(err => console.error('Error loading data:', err));
+      .catch(err => console.error("Error loading data:", err));
   </script>
 </body>
 </html>
