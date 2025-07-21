@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.static(__dirname));
 
 // ✅ Your MongoDB URI inserted directly
-mongoose.connect("mongodb+srv://nozpalnam:<db_password>@cluster0.zhabmcp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+mongoose.connect("mongodb+srv://nozpalnam:m72b0vKsbV4BunxF@cluster0.zhabmcp.mongodb.net/financeDB?retryWrites=true&w=majority&appName=Cluster0", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
